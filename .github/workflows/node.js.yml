@@ -26,7 +26,16 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci
-    - run: npm audit fix
-    - run: npm run build --if-present
-    - run: npm test
+    -name: npm install and test
+    run: |
+      npm ci
+      npm audit fix
+      npm run build --if-present
+      npm test
+    env:
+      CI:true
+    - uses: action/upload-artifacts@main 
+    with: 
+      name: webpackartifacts 
+      path: public/
+    
